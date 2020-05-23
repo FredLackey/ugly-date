@@ -1,11 +1,11 @@
 const patterns = require('./patterns');
 
 const examineString = value => {
-  let candidates = patterns.findCandidates(value);
-  candidates = patterns.pruneCandidates(candidates);
+  const candidates = patterns.findCandidates(value);
   console.log(candidates.length);
 }
 
-const value = '3367-2016-10-13-18-39-37';
+const fullValue = 'Screen Shot 2015-07-09 at 11.33.25 AM';
+const cleanValue = '2015-07-09 11.33.25 AM';
 
-examineString(value);
+examineString(cleanValue);

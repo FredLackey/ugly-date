@@ -5,58 +5,75 @@ const items = [
     format: ['H','HH'],
     example: '0..23',
     description: 'Hours (24 hour time)',
-    validator: (value) => (
-      _.isNumber(value) &&
-      [1, 2].includes(`${value}`.length) &&
-      Number(value) >= 0 && 
-      Number(value) <= 23)
+    formal: 'HH',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      [1, 2].includes(`${segment}`.length) &&
+      Number(segment) >= 0 && 
+      Number(segment) <= 23)
   },
   {
     format: ['h','hh'],
     example: '1..12',
     description: 'Hours (12 hour time used with a A.)',
-    validator: (value) => (
-      _.isNumber(value) &&
-      [1, 2].includes(`${value}`.length) &&
-      Number(value) >= 1 && 
-      Number(value) <= 12
+    formal: 'hh',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      [1, 2].includes(`${segment}`.length) &&
+      Number(segment) >= 1 && 
+      Number(segment) <= 12
     )
   },
   {
     format: ['k','kk'],
     example: '1..24',
     description: 'Hours (24 hour time from 1 to 24)',
-    validator: (value) => (
-      _.isNumber(value) &&
-      [1, 2].includes(`${value}`.length) &&
-      Number(value) >= 1 && 
-      Number(value) <= 24
+    formal: 'kk',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      [1, 2].includes(`${segment}`.length) &&
+      Number(segment) >= 1 && 
+      Number(segment) <= 24
     )
   },
   {
-    format: 'a A',
+    format: [
+      'a', 
+      'A',
+      'aa', // UNOFFICIAL
+      'AA'  // UNOFICIAL
+    ],
     example: 'am pm',
     description: 'Post or ante meridiem (Note the one character a p are also considered valid)',
-    validator: (value) => (
-      _.isValidString(value) &&
-        ['AM', 'PM'].includes(value.toUpperCase())
+    formal: 'a',
+    validator: (value, segment, token) => (
+      _.isValidString(segment) &&
+        ['AM', 'PM'].includes(segment.toUpperCase())
     )
   },
   {
     format: ['m', 'mm'],
     example: '0..59',
     description: 'Minutes',
-    validator: (value) => (
-      _.isNumber(value) &&
-      [1, 2].includes(`${value}`.length) &&
-      Number(value) >= 0 && 
-      Number(value) <= 59
+    formal: 'mm',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      [1, 2].includes(`${segment}`.length) &&
+      Number(segment) >= 0 && 
+      Number(segment) <= 59
     )
   },
   {
     format: ['s','ss'],
     example: '0..59',
-    description: 'Seconds'
+    description: 'Seconds',
+    formal: 'ss',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      [1, 2].includes(`${segment}`.length) &&
+      Number(segment) >= 0 && 
+      Number(segment) <= 59
+    )
   },
   {
     format: [
@@ -72,28 +89,30 @@ const items = [
     ],
     example: '0..999999999',
     description: 'Fractional seconds',
-    validator: (value, token) => (
-      _.isNumber(value) &&
-      `${value}`.length === token.length &&
-      [1, 2].includes(`${value}`.length) &&
-      Number(value) >= 0 && 
-      Number(value) <= 999999999
+    formal: '',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      `${segment}`.length === token.length &&
+      [1, 2].includes(`${segment}`.length) &&
+      Number(segment) >= 0 && 
+      Number(segment) <= 999999999
     )
   },
   {
     format: ['Z', 'ZZ'],
     example: '+12:00',
     description: 'Offset from UTC as +-HH:mm, +-HHmm, or Z',
-    validator: (value) => {
-      if (!_.isValidString(value)) { return false; }
-      if (value.length < 5 || value.length > 6) { return false; }
-      if (!'+-'.contains(value[0])) { return false; }
-      value = value.subst(1);
-      value = value.split(':');
+    formal: 'Z',
+    validator: (value, segment, token) => {
+      if (!_.isValidString(segment)) { return false; }
+      if (segment.length < 5 || segment.length > 6) { return false; }
+      if (!'+-'.contains(segment[0])) { return false; }
+      segment = segment.subst(1);
+      segment = segment.split(':');
       return (
-        _.isNumber(value[0]) && _.isNumber(value[1]) &&
-        Number(value[0]) >= 0 && Number(value[0]) <= 24 &&
-        Number(value[1]) >= 0 && Number(value[1]) <= 59
+        _.isNumber(segment[0]) && _.isNumber(segment[1]) &&
+        Number(segment[0]) >= 0 && Number(segment[0]) <= 24 &&
+        Number(segment[1]) >= 0 && Number(segment[1]) <= 59
       );
     }
   },

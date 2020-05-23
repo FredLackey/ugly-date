@@ -3,55 +3,74 @@ const _ = require('../../utils');
 const items = [
   {
     format: 'YYYY',
-    validator: (value) => (
-      _.isNumber(value) &&
-      Number(value) >= 1970 &&
-      Number(value) <= 9999
+    example: '',
+    description: '',
+    formal: '',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      segment.length === token.length &&
+      Number(segment) >= 1970 &&
+      Number(segment) <= 9999
     )
   },
   {
     format: 'YY',
-    validator: (value) => (
-      _.isNumber(value) &&
-      Number(value) >= 70 &&
-      Number(value) <= 99
+    example: '',
+    description: '',
+    formal: '',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      segment.length === token.length &&
+      Number(segment) >= 70 &&
+      Number(segment) <= 99
     )
   },
   {
     format: ['M', 'MM'],
-    validator: (value) => (
-      _.isNumber(value) &&
-      Number(value) >= 1 &&
-      Number(value) <= 12
+    example: '',
+    description: '',
+    formal: 'MM',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      segment.length === token.length &&
+      Number(segment) >= 1 &&
+      Number(segment) <= 12
     )
   },
   // {
   //   format: ['MMM','MMMM'],
-  //   validator: (value) => (
-  //     _.string(value) &&
-  //     !_.isNumber(value)
+  //   example: '',
+  //   description: '',
+  //   formal: '',
+  //   validator: (value, segment, token) => (
   //   )
   // },
   {
-    format: ['D DD'],
-    validator: (value) => (
-      _.isNumber(value) &&
-      Number(value) >= 1 &&
-      Number(value) <= 31
+    format: ['D', 'DD'],
+    example: '',
+    description: '',
+    formal: 'DD',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      segment.length === token.length &&
+      Number(segment) >= 1 &&
+      Number(segment) <= 31
     )
   },
   // {
   //   format: ['DDD', 'DDDD'],
-  //   validator: (value) => (
-  //     _.string(value) &&
-  //     !_.isNumber(value)
+  //   example: '',
+  //   description: '',
+  //   formal: '',
+  //   validator: (value, segment, token) => (
   //   )
   // },
   {
     format: 'X',
     example: '1410715640.579',
     description: 'Unix timestamp',
-    validator: (value) => {
+    formal: '',
+    validator: (value, segment, token) => {
       if (!_.isNumber(value)) { return false; }
       const parts = `${value}`.split('.');
       return (
@@ -66,7 +85,8 @@ const items = [
     format: 'x',
     example: '1410715640579',
     description: 'Unix ms timestamp',
-    validator: (value) => (
+    formal: '',
+    validator: (value, segment, token) => (
       _.isNumber(value) &&
       Number(value) >= _.MIN_DATE_UNIX &&
       Number(value) <= _.MAX_DATE_UNIX

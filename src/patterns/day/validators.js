@@ -5,89 +5,92 @@ const items = [
     format: 'gggg',
     example: '2014',
     description: 'Locale 4 digit week year',
-    validator: (value) => (
-      _.isNumber(value) &&
-      `${value}`.length === 4 &&
-      Number(value) >= 1970 &&
-      Number(value) <= 9999
+    formal: '',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      segment.length === token.length &&
+      Number(segment) >= 1970 &&
+      Number(segment) <= 9999
     )
   },
   // {
   //   format: 'gg',
   //   example: '14',
+  //   formal: '',
   //   description: 'Locale 2 digit week year',
-  //   validator: (value) => (
+  //   validator: (value, segment, token) => (
   //   )
   // },
   {
-    format: 'w ww	',
-    example: '1..53	',
+    format: ['w', 'ww'],
+    example: '1..53',
     description: 'Locale week of year',
-    validator: (value) => (
-      _.isNumber(value) &&
-      [1, 2].includes(`${value}`.length) &&
-      Number(value) >= 1 &&
-      Number(value) <= 53
+    formal: '',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      segment.length === token.length &&
+      Number(segment) >= 1 &&
+      Number(segment) <= 53
     )
   },
   {
     format: 'e',
-    example: '0..6	',
+    example: '0..6',
     description: 'Locale day of week',
-    validator: (value) => (
-      _.isNumber(value) &&
-      `${value}`.length === 1 &&
-      Number(value) >= 0 &&
-      Number(value) <= 6
+    formal: '',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      segment.length === token.length &&
+      Number(segment) >= 0 &&
+      Number(segment) <= 6
     )
   },
   // {
   //   format: 'ddd dddd	',
   //   example: 'Mon...Sunday	',
-  //   description: 'Day name in locale set by moment.locale()
-  //   ',
-  //   validator: (value) => (
-      
+  //   description: 'Day name in locale set by moment.locale()',
+  //   formal: '',
+  //   validator: (value, segment, token) => (
   //   )
   // },
   // {
   //   format: 'GGGG',
   //   example: '2014',
-  //   description: 'ISO 4 digit week year
-  //   ',
-  //   validator: (value) => (
-      
+  //   description: 'ISO 4 digit week year',
+  //   formal: '',
+  //   validator: (value, segment, token) => (
   //   )
   // },
   // {
   //   format: 'GG',
   //   example: '14',
-  //   description: 'ISO 2 digit week year
-  //   ',
-  //   validator: (value) => (
-      
+  //   formal: '',
+  //   description: 'ISO 2 digit week year',
+  //   validator: (value, segment, token) => (
   //   )
   // },
   {
-    format: 'W WW	',
-    example: '1..53	',
+    format: ['W', 'WW'],
+    example: '1..53',
     description: 'ISO week of year',
-    validator: (value) => (
-      _.isNumber(value) &&
-      [1, 2].includes(`${value}`.length) &&
-      Number(value) >= 1 &&
-      Number(value) <= 53
+    formal: '',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      segment.length === token.length &&
+      Number(segment) >= 1 &&
+      Number(segment) <= 53
     )
   },
   {
     format: 'E',
-    example: '1..7	',
+    example: '1..7',
     description: 'ISO day of week',
-    validator: (value) => (
-      _.isNumber(value) &&
-      `${value}`.length === 1 &&
-      Number(value) >= 1 &&
-      Number(value) <= 53
+    formal: '',
+    validator: (value, segment, token) => (
+      _.isNumber(segment) &&
+      segment.length === token.length &&
+      Number(segment) >= 1 &&
+      Number(segment) <= 53
     )
   },
 ];
