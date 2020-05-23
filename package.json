@@ -1,0 +1,32 @@
+{
+  "name": "ugly-date",
+  "version": "0.0.0",
+  "description": "Discover the format of irregular date strings for parsing.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FredLackey/ugly-date.git"
+  },
+  "keywords": [
+    "date",
+    "parser",
+    "format"
+  ],
+  "author": "Fred Lackey <fred.lackey@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/FredLackey/ugly-date/issues"
+  },
+  "homepage": "https://github.com/FredLackey/ugly-date#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^2.5.0"
+  }
+}
