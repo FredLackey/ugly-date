@@ -1,21 +1,25 @@
 const toCharLenArray    = require('./to-char-len-array');
 const { ALPHANUMERIC }  = require('./constants');
 
-module.exports = (value, delimiter = '-') => {
-  const lengths = toCharLenArray(value);
-  if (typeof lengths !== 'object' || !(lengths instanceof Array)) {
-    return '';
-  }
-  let mask = '';
-  lengths.forEach(len => {
-    if (len === 0) { 
-      mask += ' ';
+module.exports = (value) => {
+  let mask  = '';
+  let count = -1;
+  value.split('').forEach(ch => {
+
+    if (ALPHANUMERIC.includes(ch.toUpperCase())) {
+      count += 1;
+      mask += ALPHANUMERIC.substr(count, 1);
       return;
+    } 
+
+    if (ch === ' ') {
+      mask += ' ';
+    } else {
+      mask += '-'
     }
-    if (mask && !mask.endsWith(' ')) {
-      mask += delimiter;
-    }
-    mask += ALPHANUMERIC.substr(0, Number(len));
-  });
+    
+    count = -1;
+    return;
+  })
   return mask;
 };

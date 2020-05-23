@@ -1,7 +1,7 @@
 {
   "name": "ugly-date",
   "version": "0.0.0",
-  "description": "Discover the format of irregular date strings for parsing.",
+  "description": "Discover the format of irregular date strings needed for parsing.",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,7 +15,11 @@
     "parser",
     "format"
   ],
-  "author": "Fred Lackey <fred.lackey@gmail.com>",
+  "author": {
+    "name": "Fred Lackey",
+    "email": "fred.lackey@gmail.com",
+    "url": "http://www.fredlackey.com"
+  },
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/FredLackey/ugly-date/issues"

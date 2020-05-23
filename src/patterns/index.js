@@ -126,10 +126,16 @@ const findCandidates = value => {
     time.patterns
   );
   const valid = patterns.filter(_.isValidString);
+
   let items = valid.map(pattern => ({
     pattern,
     hash : _.toCharMask(pattern)
   }));
+  for (let i = 0; i < items.length; i += 1) {   
+    const id = `${i}`.padStart(`${items.length}`.length, '0');
+    items[i].id = `x${id}`;
+  }
+
   findTrivial(items);
   locateCadidates(hash, items);
   items = items.filter(item => (
@@ -141,6 +147,7 @@ const findCandidates = value => {
     const provenSegments = item.segments.filter(seg => (seg && seg.validAt.length > 0));
     return (provenSegments.length === patternSegments.length);
   });
+
   return items;
 };
 
