@@ -75,7 +75,7 @@ const getSuperior = (item, items) => {
     // x.pattern.indexOf(item.pattern) === 0));
     x.pattern.toUpperCase().indexOf(item.pattern.toUpperCase()) === 0));
   return results;
-}
+};
 const getTrivial = items => {
   const trivial = [];
   items.filter(x => (x && x.pattern)).forEach(item => {
@@ -85,11 +85,11 @@ const getTrivial = items => {
     }
   });
   return trivial;
-}
+};
 const hasTrivial = items => {
   const trivial = getTrivial(items);
   return trivial.length > 0;
-}
+};
 const removeTrivial = items => {
   const results = [];
   items.filter(x => (x && x.pattern)).forEach(item => {
@@ -99,14 +99,14 @@ const removeTrivial = items => {
     }
   });
   return results;
-}
+};
 const pruneTrivial = items => {
   let result = removeTrivial(items);
   while (hasTrivial(result)) {
     result = removeTrivial(result);
   }
   return result;
-}
+};
 
 module.exports = {
   all,

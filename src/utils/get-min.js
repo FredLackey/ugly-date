@@ -8,6 +8,6 @@ const getMin = values => {
       }
     });
   return min;
-}
+};
 
 module.exports = getMin;

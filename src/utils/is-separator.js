@@ -6,4 +6,4 @@ module.exports = ch => {
     ch.length === 1 &&
     SEPARATORS.indexOf(ch) >= 0
   );
-}
+};

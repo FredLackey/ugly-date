@@ -14,8 +14,29 @@ const isValidString   = require('./is-valid-string');
 const toMask          = require('./to-mask');
 const toTokenList     = require('./to-token-list');
 
-module.exports = {
-  ...constants,
+const {
+  ALPHA,
+  ALPHANUMERIC,
+  DIGITS,
+  SEPARATORS,
+
+  MIN_DATE,
+  MIN_DATE_UNIX,
+  MAX_DATE,
+  MAX_DATE_UNIX,
+} = constants;
+
+module.exports = { 
+  ALPHA,
+  ALPHANUMERIC,
+  DIGITS,
+  SEPARATORS,
+  
+  MIN_DATE,
+  MIN_DATE_UNIX,
+  MAX_DATE,
+  MAX_DATE_UNIX,
+
   getMax,
   getMin,
   isAlphanumeric,
@@ -29,5 +50,5 @@ module.exports = {
   isValidObject,
   isValidString,
   toMask,
-  toTokenList
+  toTokenList,
 };

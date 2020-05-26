@@ -5,4 +5,4 @@ module.exports = (value, isEmptyOkay = true) => {
     !(value instanceof Array) &&
     (isEmptyOkay || Object.keys(value).length > 0)
   );
-}
+};

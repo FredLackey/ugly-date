@@ -8,6 +8,6 @@ const getMax = values => {
       }
     });
   return max;
-}
+};
 
 module.exports = getMax;

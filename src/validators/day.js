@@ -46,8 +46,8 @@ const items = [
     )
   },
   // {
-  //   format: 'ddd dddd	',
-  //   example: 'Mon...Sunday	',
+  //   format: 'ddd dddd',
+  //   example: 'Mon...Sunday',
   //   description: 'Day name in locale set by moment.locale()',
   //   formal: '',
   //   validator: (value, segment, token) => (

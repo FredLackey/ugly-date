@@ -6,4 +6,4 @@ module.exports = ch => {
     ch.length === 1 &&
     ALPHANUMERIC.indexOf(ch.toUpperCase()) >= 0
   );
-}
+};

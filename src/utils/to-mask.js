@@ -15,11 +15,11 @@ module.exports = (value) => {
     if (ch === ' ') {
       mask += ' ';
     } else {
-      mask += '-'
+      mask += '-';
     }
     
     count = -1;
-    return;
-  })
+    
+  });
   return mask;
 };

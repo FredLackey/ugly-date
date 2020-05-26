@@ -47,6 +47,7 @@ const validate = (value, locations) => {
       }
 
       const pastTokens = [];
+      // eslint-disable-next-line no-loop-func
       tokens.forEach(token => {
 
         const position    = pastTokens.join('').length;
@@ -72,7 +73,7 @@ const validate = (value, locations) => {
         }
 
         pastTokens.push(token);
-      })
+      });
     }
     location.isValid = (count > 0) && location.isValid !== false && !location.error;
   });

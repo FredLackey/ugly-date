@@ -2,7 +2,7 @@ const _ = require('../utils');
 
 const items = [
   {
-    format: ['H','HH'],
+    format: ['H', 'HH'],
     example: '0..23',
     description: 'Hours (24 hour time)',
     formal: 'HH',
@@ -13,7 +13,7 @@ const items = [
       Number(segment) <= 23)
   },
   {
-    format: ['h','hh'],
+    format: ['h', 'hh'],
     example: '1..12',
     description: 'Hours (12 hour time used with a A.)',
     formal: 'hh',
@@ -25,7 +25,7 @@ const items = [
     )
   },
   {
-    format: ['k','kk'],
+    format: ['k', 'kk'],
     example: '1..24',
     description: 'Hours (24 hour time from 1 to 24)',
     formal: 'kk',
@@ -64,7 +64,7 @@ const items = [
     )
   },
   {
-    format: ['s','ss'],
+    format: ['s', 'ss'],
     example: '0..59',
     description: 'Seconds',
     formal: 'ss',
