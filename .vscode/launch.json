@@ -7,11 +7,20 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "00 - basic",
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}/src/index.js"
+      "program": "${workspaceFolder}/_tests/00 - basic.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "01 - with noise",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/_tests/01 - with noise.js"
     }
   ]
 }

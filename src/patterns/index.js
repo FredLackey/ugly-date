@@ -1,168 +1,107 @@
-const _ = require('../utils');
-
+const _     = require('../utils');
 const date  = require('./date');
 const day   = require('./day');
 const time  = require('./time');
 
-const getSegments = pattern => {
-  const segments = [];
-  const chars = pattern.split('');
-  let curSegment = '';
-  let lastChar = '';
-  let curChar = '';
-  let isAlpha = null;
-  let isSame = null;
-  for (let i = 0; i < chars.length; i += 1) {
-    curChar = chars[i];
-    isAlpha = _.ALPHANUMERIC.indexOf(curChar.toUpperCase()) >= 0;
-    isSame  = lastChar && (curChar === lastChar);
-    if (!curSegment && !isAlpha) {
-      continue;
-    }    
-    if (!curSegment && isAlpha) {
-      curSegment = curChar;
-      lastChar = curChar;
-      continue;
-    }
-    if (isSame) {
-      curSegment += curChar;
-      continue;
-    }
+const all = [].concat(date, day, time).filter(_.isValidString);
 
-    if (curSegment) {
-      segments.push(curSegment);
-    }
-
-    curSegment = (isAlpha ? curChar : '');
-    lastChar = (isAlpha ? curChar : '');
-  }
-  if (curSegment) {
-    segments.push(curSegment);
-  }
-  return segments;
-}
-const proveCandidates = (value, candidates) => {
-  
-  candidates.filter(candidate => (candidate && candidate.pattern)).forEach(candidate => {
-
-    candidate.segments = [];
-    
-    const patternSegments = getSegments(candidate.pattern).filter(_.isValidString);
-    patternSegments.forEach(patternSegment => {
-
-      const patternSegmentValidators = [].concat(date.validators, day.validators, time.validators)
-        .filter(x => (x && x.format && (
-          (x.format === patternSegment) ||
-          (x.format instanceof Array && x.format.includes(patternSegment))
-        )));
-
-      if (patternSegmentValidators.length > 1) {
-        throw new Error(`Excessive validators found for segment: ${patternSegment}`)
-      }
-      if (patternSegmentValidators.length !== 1) {
-        throw new Error(`Inadequate validators found for segment: ${patternSegment}`)
-      }
-
-      const validPositions = [];
-      for (let v = 0; v < value.length; v += 1) {
-        
-        let segment = value.substr(v);
-        if (segment.length < patternSegment.length) {
-          break;
-        }
-        if (segment.length > patternSegment.length) {
-          segment = segment.substr(0, patternSegment.length);
-        }
-        
-        const isValid = patternSegmentValidators[0].validator(value, segment, patternSegment);
-        if (!isValid) {
-          continue;
-        }
-        
-        validPositions.push(v);
-      }
-
-      candidate.segments.push({
-        segment : patternSegment,
-        validAt : validPositions
-      })
-    });
-  });
-}
-
-const findTrivial = items => {
-  items.forEach(item => {
-    item.trivials = [];
-  });
-  items.forEach(item => {
-    item.trivials = items.filter(other => (
-      (other !== item) &&
-      other.pattern.length > item.pattern.length &&
-      other.pattern.indexOf(item.pattern) >= 0
-    ));
-  });
-}
-const locateCadidates = (hash, items) => {
-  for (let i = 0; i < items.length; i += 1) {
-    const item = items[i];
-    item.positions = [];
-    for (let h = 0; h < hash.length; h += 1) {
-      const snip  = hash.substr(h);
-      if (snip.length < item.hash.length) {
-        break;
-      }
-      const pos   = snip.indexOf(item.hash);
-      if (pos === 0) {
-        item.positions.push(h);
+const locate = value => {
+  const valueMask = _.toMask(value);
+  const locations = [];
+  all.forEach(pattern => {
+    const patternMask = _.toMask(pattern);
+    for (let x = 0; x < valueMask.length; x += 1) {
+      let valueMaskSnip = valueMask.substr(x);
+      if (valueMaskSnip.length < patternMask.length) { break; }
+      valueMaskSnip = valueMaskSnip.substr(0, patternMask.length);
+      if (valueMaskSnip === patternMask) {
+        locations.push({
+          pattern,
+          patternMask,
+          position: x,
+          value: value.substr(x, patternMask.trim().length)
+        });
       }
     }
-  }
-}
-const findCandidates = value => {
-  const hash = _.toCharMask(value);
-  const patterns = [].concat(
-    date.patterns,
-    day.patterns,
-    time.patterns
-  );
-  const valid = patterns.filter(_.isValidString);
-
-  let items = valid.map(pattern => ({
-    pattern,
-    hash : _.toCharMask(pattern)
-  }));
-  for (let i = 0; i < items.length; i += 1) {   
-    const id = `${i}`.padStart(`${items.length}`.length, '0');
-    items[i].id = `x${id}`;
-  }
-
-  findTrivial(items);
-  locateCadidates(hash, items);
-  items = items.filter(item => (
-    item && item.positions.length > 0
-  ));
-  proveCandidates(value, items);
-  items = items.filter(item => {
-    const patternSegments = getSegments(item.pattern).filter(_.isValidString);
-    const provenSegments = item.segments.filter(seg => (seg && seg.validAt.length > 0));
-    return (provenSegments.length === patternSegments.length);
   });
+  return locations;
+};
+const split = (locations) => {
+  [].concat(locations).filter(x => (x && x.patternMask)).forEach(location => {
+    let curPattern  = '';
+    let curValue    = '';
+    let count       = 0;
+    location.segments = {
+      pattern : [],
+      value   : [],
+    };
+    for (let i = 0; i < location.patternMask.length; i += 1) {
+      const patternChar = location.pattern[i];
+      const lastChar    = (curValue.length > 0) ? curValue[curValue.length - 1] : '';
+      const isSame      = lastChar.length > 0 && (
+        (patternChar === ' ' && lastChar === ' ') ||
+        // (patternChar === '-' && lastChar === '-') ||
+        (_.isSeparator(patternChar) && _.isSeparator(lastChar)) || 
+        (_.isAlphanumeric(patternChar) === _.isAlphanumeric(lastChar))
+      );
+      if (patternChar !== ' ' && !_.isAlphanumeric(patternChar) && !_.isSeparator(patternChar)) {
+        throw new Error('WTF!?!');
+      }
 
-  return items;
+      if (!isSame && curValue.length > 0) {
+        location.segments.pattern.push(curPattern);
+        location.segments.value.push(curValue);
+        curPattern = '';
+        curValue = '';
+      }
+
+      curValue += location.value[i];
+      curPattern += patternChar;
+      count += 1;
+    }
+    if (curValue.length > 0) {
+      location.segments.pattern.push(curPattern);
+      location.segments.value.push(curValue);
+      curPattern = '';
+      curValue = '';
+    }
+  });
 };
 
+const getSuperior = (item, items) => {
+  const results = items.filter(x => (x && x.pattern && 
+    x !== item && 
+    x.pattern.length >= item.pattern.length && 
+    // x.pattern.indexOf(item.pattern) === 0));
+    x.pattern.toUpperCase().indexOf(item.pattern.toUpperCase()) === 0));
+  return results;
+}
+const getTrivial = items => {
+  const trivial = [];
+  items.filter(x => (x && x.pattern)).forEach(item => {
+    const superior = getSuperior(item, items);
+    if (superior.length > 0) {
+      trivial.push(item);
+    }
+  });
+  return trivial;
+}
 const hasTrivial = items => {
-  findTrivial(items);
-  return items
-    .filter(item => (item && item.trivials.length > 0))
-    .length > 0;
+  const trivial = getTrivial(items);
+  return trivial.length > 0;
 }
 const removeTrivial = items => {
-  findTrivial(items);
-  return items.filter(x => (x && x.trivials.length === 0));
+  const results = [];
+  items.filter(x => (x && x.pattern)).forEach(item => {
+    const superior = getSuperior(item, items);
+    if (superior.length === 0) {
+      results.push(item);
+    }
+  });
+  return results;
 }
 const pruneTrivial = items => {
-  let result = [].concat(items).filter(x => (x && x.pattern));
+  let result = removeTrivial(items);
   while (hasTrivial(result)) {
     result = removeTrivial(result);
   }
@@ -170,6 +109,13 @@ const pruneTrivial = items => {
 }
 
 module.exports = {
-  findCandidates,
+  all,
+  
+  date,
+  day,
+  time,
+  
+  locate,
+  split,
   pruneTrivial
 };

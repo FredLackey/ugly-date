@@ -11,7 +11,14 @@ const getPossible = work => {
       const lastStep  = sequence.steps.find(x => (x && x.position === lastPos));
       const nextPos   = lastPos + lastStep.candidate.pattern.length;
       const positions = candidate.positions.filter(x => (x && x >= nextPos));
-      positions.forEach(position => {
+      const safePos   = positions.filter(position => {
+        const endLength = position + candidate.pattern.length;
+        if (endLength > work.value.length) {
+          return false;
+        }
+        return true;
+      });
+      safePos.forEach(position => {
         const existing = possible.find(c => (c && 
           c.sequence === sequence &&
           c.candidate === candidate &&
@@ -37,11 +44,18 @@ const buildSteps = work => {
   console.log(work);
 }
 
-const caclulate = (candidates) => {
+const caclulate = (value, candidates) => {
   const roots = candidates.filter(c => (c && c.positions.includes(0)));
   const work = {
+    value,
     candidates,
-    sequences : roots.map(root => ({
+    sequences : []
+  };
+  
+  for (let i = 0; i < roots.length; i += 1) {
+    const root = roots[i];
+    work.sequences.push({
+      id: i,
       root,
       items: [root],
       steps: [
@@ -50,12 +64,15 @@ const caclulate = (candidates) => {
           candidate : root
         }
       ]
-    }))
-  };
+    });
+  }
+
   while (hasPossible(work)) {
     buildSteps(work);
   }
   return work.sequences;
+
+
 }
 
 module.exports = {

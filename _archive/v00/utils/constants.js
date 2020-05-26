@@ -1,7 +1,6 @@
 const ALPHA         = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const DIGITS        = '0123456789';
 const ALPHANUMERIC  = ALPHA + DIGITS;
-const SEPARATORS    = '.:/\\-';
 
 const MIN_DATE      = new Date(1970, 1, 1);
 const MIN_DATE_UNIX = MIN_DATE.getTime()/1000;
@@ -12,7 +11,6 @@ module.exports = {
   ALPHA,
   ALPHANUMERIC,
   DIGITS,
-  SEPARATORS,
 
   MIN_DATE,
   MIN_DATE_UNIX,
