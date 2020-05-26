@@ -23,15 +23,21 @@ const analyze = value => {
   
   const results = {
     pattern : patterns.assemble(value, locations),
-    value,
-    locations: locations.map(x => ({
+    locations: locations.filter(x => (x && x.formal)).map(x => ({
       formal  : x.formal,
       pattern : x.pattern,
       position: x.position,
       value   : x.value,
       values  : JSON.parse(JSON.stringify(x.values))
-    }))
+    })),
+    value,
+    values: {}
   };
+  results.locations.filter(x => (x && x.values)).forEach(location => {
+    Object.keys(location.values).forEach(key => {
+      results.values[key] = location.values[key];
+    });
+  });
   
   return results;
 };
