@@ -25,6 +25,16 @@ Example results:
 ```
 {
   "pattern": "Screen Shot YYYY-MM-DD at hh.mm.ss a",
+  "value": "Screen Shot 2015-07-09 at 1.33.25 PM",
+  "values": {
+    "YYYY": 2015,
+    "MM": 7,
+    "DD": 9,
+    "h": 1,
+    "mm": 33,
+    "ss": 25,
+    "aa": "PM"
+  },
   "locations": [
     {
       "formal": "YYYY-MM-DD",
@@ -50,16 +60,6 @@ Example results:
       }
     }
   ],
-  "value": "Screen Shot 2015-07-09 at 1.33.25 PM",
-  "values": {
-    "YYYY": 2015,
-    "MM": 7,
-    "DD": 9,
-    "h": 1,
-    "mm": 33,
-    "ss": 25,
-    "aa": "PM"
-  }
 }
 ```
 In the example above, the following values are returned:
