@@ -3,7 +3,7 @@ Discover the format of irregular date strings needed for parsing.
 
 ## Installation  
 
-`npm i ugly-date`
+`npm i @fredlackey/ugly-date`
 
 ## Important  
 This library is an experiment... something I could not shake out of my head on Friday evening.  It is _not_ complete.  While it does handle basic formats, containing numerics and such, it does _not_ contain logic to handle words or "week of year" / "day of year" logic.
