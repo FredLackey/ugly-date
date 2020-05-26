@@ -1,3 +1,4 @@
+const parser      = require('./parser');
 const patterns    = require('./patterns');
 const validators  = require('./validators');
 
@@ -38,6 +39,7 @@ const analyze = value => {
       results.values[key] = location.values[key];
     });
   });
+  results.date = parser.toDate(results);
   
   return results;
 };

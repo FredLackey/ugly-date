@@ -24,6 +24,7 @@ const results  = uglyDate.analyze(value);
 Example results:
 ```
 {
+  "date": "2015-07-09T17:33:25.000Z",
   "pattern": "Screen Shot YYYY-MM-DD at hh.mm.ss a",
   "value": "Screen Shot 2015-07-09 at 1.33.25 PM",
   "values": {
@@ -64,10 +65,11 @@ Example results:
 ```
 In the example above, the following values are returned:
 
+  * **date** : Date object, if a full date could be constructed.
   * **pattern** : Example string including the detected pattern.
-  * **locations** : Array of locations where patterns were detected.
   * **value** : Original string (for verification puposes).
   * **values** : All detected keys (ie `result.values.YYYY`).
+  * **locations** : Array of locations where patterns were detected.
 
 And, for each `location` item, you have the following:
 
