@@ -5,6 +5,28 @@ const time  = require('./time');
 
 const all = [].concat(date, day, time).filter(_.isValidObject);
 
+const splitPattern = value => {
+  if (!_.isAlphanumeric(value)) { 
+    return null; 
+  }
+  const patterns = [];
+  const curPattern = '';
+  value.split('').forEach(ch => {
+    if (!curPattern || curPattern.toUpperCase()[curPattern.length - 1 ] === ch.toUpperCase()) {
+      curPattern += ch;
+      return;
+    }
+    patterns.push(curPattern);
+    curPattern = ch;
+  });
+  if (curPattern) { patterns.push(curPattern); }
+  return patterns;
+}
+// const hasMultiplePatterns = value => {
+//   const results = splitPattern(value);
+//   return results.length > 1;
+// }
+
 const validate = (value, locations) => {
  
   [].concat(locations).filter(x => (x && x.patternMask && x.segments && x.segments.pattern.length > 0)).forEach(location => {
