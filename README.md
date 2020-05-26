@@ -11,6 +11,18 @@ This library is an experiment... something I could not shake out of my head on F
 ## Background  
 Countless libraries out there that will _parse_ a date string if you supply a string and a format.  Most of them will also _try_ to return a valid date if you do _not_ supply a format.  In that scenario, the date value often comes back wrong or incomplete.  In fact, it is the reason why [`moment`](https://momentjs.com/), the de facto library for date manipulation (that i know of), is pulling out their parse logic for scenarios where a format is _not_ supplied.
 
+## Usage
+Simply supply a value to the `.analyze` function for a report on where recognized patterns are found within the string.
+
+```
+const uglyDate = require('ugly-date);
+
+const value = 'Screen Shot 2015-07-09 at 1.33.25 PM';
+
+const locations = uglyDate.analyze(value);
+```
+
+
 ## Contact Info  
 As always, get in touch if you have ideas or feedback ...
 

@@ -9,7 +9,12 @@ const analyze = value => {
   patterns.split(locations);
   validators.validate(value, locations);
   const valid = locations.filter(x => (x && x.isValid === true));
-  console.log(valid.length);
+  const results = valid.map(x => ({
+    pattern : x.pattern,
+    position: x.position,
+    value   : x.value
+  }))
+  return results;
 };
 
 module.exports = {

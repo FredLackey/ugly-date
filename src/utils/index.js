@@ -12,6 +12,7 @@ const isSeparators    = require('./is-separators');
 const isValidObject   = require('./is-valid-object');
 const isValidString   = require('./is-valid-string');
 const toMask          = require('./to-mask');
+const toTokenList     = require('./to-token-list');
 
 module.exports = {
   ...constants,
@@ -27,5 +28,6 @@ module.exports = {
   isSeparators,
   isValidObject,
   isValidString,
-  toMask
+  toMask,
+  toTokenList
 };
