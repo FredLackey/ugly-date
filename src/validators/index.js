@@ -5,29 +5,6 @@ const time  = require('./time');
 
 const all = [].concat(date, day, time).filter(_.isValidObject);
 
-// const toTokens = value => {
-//   if (!_.isAlphanumeric(value)) { 
-//     return null; 
-//   }
-//   const chars  = value.split('');
-//   const tokens = [];
-//   const token  = '';
-//   for (let i = 0; i < chars.length; i += 1) {
-//     if (!token || token.value.toUpperCase()[token.value.length - 1 ] === ch.toUpperCase()) {      
-//       token.token += ch;
-//       token.pos
-//       continue;
-//     }
-//     tokens.push({
-//       token   : token,
-//       position: 
-//     });
-//     token = ch;
-//   });
-//   if (token) { tokens.push(token); }
-//   return tokens;
-// }
-
 const validate = (value, locations) => {
  
   [].concat(locations).filter(x => (x && x.patternMask && x.segments && x.segments.pattern.length > 0)).forEach(location => {
@@ -79,6 +56,32 @@ const validate = (value, locations) => {
   });
 };
 
+const reformat = items => {
+  items.forEach(item => {
+    const segments  = _.toTokenList(item.pattern);
+    const history   = [];
+    const values    = [];
+    const formal    = [];
+    for (let i = 0; i < segments.length; i += 1) {
+      const segment = segments[i];
+      const value   = item.value.substr(history.join('').length, segment.length);
+      const validator = all.find(x => (x && (
+        x.format === segment || 
+        (x.format instanceof Array && x.format.includes(segment))
+      )));
+      history.push(segment);
+      values.push(value);
+      if (validator) {
+        formal.push(validator.formal || segment);
+      } else {
+        formal.push(value);        
+      }
+    }
+    item.formal = formal.join('');
+  });
+};
+
 module.exports = {
-  validate
+  validate,
+  reformat
 };

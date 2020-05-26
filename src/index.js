@@ -9,11 +9,13 @@ const analyze = value => {
   patterns.split(locations);
   validators.validate(value, locations);
   const valid = locations.filter(x => (x && x.isValid === true));
+  validators.reformat(valid);
   const results = valid.map(x => ({
+    formal  : x.formal,
     pattern : x.pattern,
     position: x.position,
     value   : x.value
-  }))
+  }));
   return results;
 };
 
