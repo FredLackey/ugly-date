@@ -108,6 +108,28 @@ const pruneTrivial = items => {
   return result;
 };
 
+const assemble = (value, locations) => {
+  const impacted = [];
+  let result = '';
+  for (let l = 0; l < locations.length; l += 1) {
+    for (let v = 0; v < locations[l].value.length; v += 1) {
+      impacted.push(locations[l].position + v);
+    }
+  }
+  for (let i = 0; i < value.length; i += 1) {
+    // eslint-disable-next-line no-loop-func
+    const item = locations.find(x => (x && x.position === i));
+    if (item) {
+      result += item.formal;
+    }
+    if (impacted.includes(i)) {
+      continue;
+    }
+    result += value[i];
+  }
+  return result;
+};
+
 module.exports = {
   all,
   
@@ -117,5 +139,6 @@ module.exports = {
   
   locate,
   split,
-  pruneTrivial
+  pruneTrivial,
+  assemble
 };

@@ -17,28 +17,38 @@ Simply supply a value to the `.analyze` function for a report on where recognize
 ```
 const uglyDate = require('@fredlackey/ugly-date');
 
-const value = 'Screen Shot 2015-07-09 at 1.33.25 PM';
+const value    = 'Screen Shot 2015-07-09 at 1.33.25 PM';
 
-const locations = uglyDate.analyze(value);
+const results  = uglyDate.analyze(value);
 ```
 Example results:
 ```
-[
-  {
-    "formal": "YYYY-MM-DD",
-    "pattern": "YYYY-MM-DD",
-    "position": 12,
-    "value": "2015-07-09"
-  },
-  {
-    "formal": "hh.mm.ss a",
-    "pattern": "h:mm:ss aa",
-    "position": 26,
-    "value": "1.33.25 PM"
-  }
-]
+{
+  "pattern": "Screen Shot YYYY-MM-DD at hh.mm.ss a",
+  "value": "Screen Shot 2015-07-09 at 1.33.25 PM",
+  "locations": [
+    {
+      "formal": "YYYY-MM-DD",
+      "pattern": "YYYY-MM-DD",
+      "position": 12,
+      "value": "2015-07-09"
+    },
+    {
+      "formal": "hh.mm.ss a",
+      "pattern": "h:mm:ss aa",
+      "position": 26,
+      "value": "1.33.25 PM"
+    }
+  ]
+}
 ```
 In the example above, the following values are returned:
+
+  * **pattern** : Example string including the detected pattern.
+  * **value** : Original string (for verification puposes).
+  * **locations** : Array of locations where patterns were detected.
+
+And, for each `location` item, you have the following:
 
   * **pattern** : Actual pattern detected in supplied string.
   * **position** : Index of the substring having the pattern.

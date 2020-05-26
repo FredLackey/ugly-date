@@ -19,9 +19,6 @@ const validate = (value, locations) => {
       }
       
       const tokens = _.toTokenList(location.segments.pattern[i]);
-      if (tokens.length > 1) {
-        console.log(`tokens: ${tokens.length}`);
-      }
 
       const pastTokens = [];
       // eslint-disable-next-line no-loop-func

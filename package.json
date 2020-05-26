@@ -1,6 +1,6 @@
 {
   "name": "@fredlackey/ugly-date",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Discover the format of irregular date strings needed for parsing.",
   "main": "src/index.js",
   "scripts": {
@@ -13,8 +13,11 @@
   },
   "keywords": [
     "date",
+    "datetime",
     "parser",
-    "format"
+    "format",
+    "moment",
+    "momentjs"
   ],
   "author": {
     "name": "Fred Lackey",
