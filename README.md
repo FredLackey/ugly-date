@@ -15,7 +15,7 @@ Countless libraries out there that will _parse_ a date string if you supply a st
 Simply supply a value to the `.analyze` function for a report on where recognized patterns are found within the string.
 
 ```
-const uglyDate = require('ugly-date);
+const uglyDate = require('@fredlackey/ugly-date');
 
 const value = 'Screen Shot 2015-07-09 at 1.33.25 PM';
 
