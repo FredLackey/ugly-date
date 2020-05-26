@@ -10,8 +10,10 @@ const items = [
       _.isNumber(segment) &&
       [1, 2].includes(`${segment}`.length) &&
       Number(segment) >= 0 && 
-      Number(segment) <= 23)
-  },
+      Number(segment) <= 23
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   {
     format: ['h', 'hh'],
     example: '1..12',
@@ -22,8 +24,9 @@ const items = [
       [1, 2].includes(`${segment}`.length) &&
       Number(segment) >= 1 && 
       Number(segment) <= 12
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   {
     format: ['k', 'kk'],
     example: '1..24',
@@ -34,8 +37,9 @@ const items = [
       [1, 2].includes(`${segment}`.length) &&
       Number(segment) >= 1 && 
       Number(segment) <= 24
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   {
     format: [
       'a', 
@@ -46,10 +50,8 @@ const items = [
     example: 'am pm',
     description: 'Post or ante meridiem (Note the one character a p are also considered valid)',
     formal: 'a',
-    validator: (value, segment, token) => (
-      _.isValidString(segment) &&
-        ['AM', 'PM'].includes(segment.toUpperCase())
-    )
+    validator: (value, segment, token) => (_.isValidString(segment) && ['AM', 'PM'].includes(segment.toUpperCase())),
+    toValue: (value, segment, token) => ((_.isValidString(segment) && ['AM', 'PM'].includes(segment.toUpperCase())) ? segment : undefined),
   },
   {
     format: ['m', 'mm'],
@@ -61,8 +63,9 @@ const items = [
       [1, 2].includes(`${segment}`.length) &&
       Number(segment) >= 0 && 
       Number(segment) <= 59
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   {
     format: ['s', 'ss'],
     example: '0..59',
@@ -73,8 +76,9 @@ const items = [
       [1, 2].includes(`${segment}`.length) &&
       Number(segment) >= 0 && 
       Number(segment) <= 59
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   {
     format: [
       'S',
@@ -96,8 +100,9 @@ const items = [
       [1, 2].includes(`${segment}`.length) &&
       Number(segment) >= 0 && 
       Number(segment) <= 999999999
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   {
     format: ['Z', 'ZZ'],
     example: '+12:00',
@@ -114,7 +119,8 @@ const items = [
         Number(segment[0]) >= 0 && Number(segment[0]) <= 24 &&
         Number(segment[1]) >= 0 && Number(segment[1]) <= 59
       );
-    }
+    },
+    toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
   },
 ];
 

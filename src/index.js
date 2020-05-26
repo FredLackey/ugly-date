@@ -28,7 +28,8 @@ const analyze = value => {
       formal  : x.formal,
       pattern : x.pattern,
       position: x.position,
-      value   : x.value
+      value   : x.value,
+      values  : JSON.parse(JSON.stringify(x.values))
     }))
   };
   

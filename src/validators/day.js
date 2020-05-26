@@ -11,8 +11,9 @@ const items = [
       segment.length === token.length &&
       Number(segment) >= 1970 &&
       Number(segment) <= 9999
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   // {
   //   format: 'gg',
   //   example: '14',
@@ -31,8 +32,9 @@ const items = [
       segment.length === token.length &&
       Number(segment) >= 1 &&
       Number(segment) <= 53
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   {
     format: 'e',
     example: '0..6',
@@ -43,8 +45,9 @@ const items = [
       segment.length === token.length &&
       Number(segment) >= 0 &&
       Number(segment) <= 6
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   // {
   //   format: 'ddd dddd',
   //   example: 'Mon...Sunday',
@@ -79,8 +82,9 @@ const items = [
       segment.length === token.length &&
       Number(segment) >= 1 &&
       Number(segment) <= 53
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   {
     format: 'E',
     example: '1..7',
@@ -91,8 +95,9 @@ const items = [
       segment.length === token.length &&
       Number(segment) >= 1 &&
       Number(segment) <= 53
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
 ];
 
 items.forEach(item => {

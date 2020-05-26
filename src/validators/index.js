@@ -59,6 +59,7 @@ const reformat = items => {
     const history   = [];
     const values    = [];
     const formal    = [];
+    item.values     = {};
     for (let i = 0; i < segments.length; i += 1) {
       const segment = segments[i];
       const value   = item.value.substr(history.join('').length, segment.length);
@@ -70,6 +71,7 @@ const reformat = items => {
       values.push(value);
       if (validator) {
         formal.push(validator.formal || segment);
+        item.values[segment] = validator.toValue(null, value, segment);
       } else {
         formal.push(value);        
       }

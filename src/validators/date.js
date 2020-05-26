@@ -11,8 +11,9 @@ const items = [
       segment.length === token.length &&
       Number(segment) >= 1970 &&
       Number(segment) <= 9999
-    )
-  },
+    ),
+    toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   {
     format: 'YY',
     example: '',
@@ -23,7 +24,8 @@ const items = [
       segment.length === token.length &&
       Number(segment) >= 70 &&
       Number(segment) <= 99
-    )
+    ),
+    toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
   },
   {
     format: ['M', 'MM'],
@@ -35,8 +37,9 @@ const items = [
       segment.length === token.length &&
       Number(segment) >= 1 &&
       Number(segment) <= 12
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   // {
   //   format: ['MMM','MMMM'],
   //   example: '',
@@ -55,8 +58,9 @@ const items = [
       segment.length === token.length &&
       Number(segment) >= 1 &&
       Number(segment) <= 31
-    )
-  },
+      ),
+      toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
+    },
   // {
   //   format: ['DDD', 'DDDD'],
   //   example: '',
@@ -79,7 +83,8 @@ const items = [
         Number(`${parts[0]}${parts[1]}`) >= _.MIN_DATE_UNIX &&
         Number(`${parts[0]}${parts[1]}`) <= _.MAX_DATE_UNIX
       );
-    }
+    },
+    toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
   },
   {
     format: 'x',
@@ -90,7 +95,8 @@ const items = [
       _.isNumber(value) &&
       Number(value) >= _.MIN_DATE_UNIX &&
       Number(value) <= _.MAX_DATE_UNIX
-    )
+    ),
+    toValue: (value, segment, token) => (_.isNumber(segment) ? Number(segment) : undefined)
   }
 ];
 

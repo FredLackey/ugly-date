@@ -31,13 +31,24 @@ Example results:
       "formal": "YYYY-MM-DD",
       "pattern": "YYYY-MM-DD",
       "position": 12,
-      "value": "2015-07-09"
+      "value": "2015-07-09",
+      "values": {
+        "YYYY": 2015,
+        "MM": 7,
+        "DD": 9
+      }
     },
     {
       "formal": "hh.mm.ss a",
       "pattern": "h:mm:ss aa",
       "position": 26,
-      "value": "1.33.25 PM"
+      "value": "1.33.25 PM",
+      "values": {
+        "h": 1,
+        "mm": 33,
+        "ss": 25,
+        "aa": "PM"
+      }
     }
   ]
 }
@@ -54,6 +65,7 @@ And, for each `location` item, you have the following:
   * **position** : Index of the substring having the pattern.
   * **value** : Value of the substring matched on the pattern.
   * **formal** : The actual formal / proper pattern to parse this pattern.
+  * **values** : Each of the extracted values in their `number` or `string` form.
   
   > **Note:**  
   > Pay close attention to the `a` and `aa` paterns shown in the `formal` and `pattern` values.  In this example, he double-character formatted value was detected, however this _is not_ the proper token to use when parsing strings.  Intead, the _single_ `a` is used.  While both are provided here, you would want to use the `formal` value as the actual pattern when parsing this string.
