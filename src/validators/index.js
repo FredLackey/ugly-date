@@ -59,6 +59,7 @@ const reformat = items => {
     const history   = [];
     const values    = [];
     const formal    = [];
+    const types     = [];
     item.values     = {};
     for (let i = 0; i < segments.length; i += 1) {
       const segment = segments[i];
@@ -72,11 +73,19 @@ const reformat = items => {
       if (validator) {
         formal.push(validator.formal || segment);
         item.values[segment] = validator.toValue(null, value, segment);
+        if (validator.type && !types.includes(validator.type)) {
+          types.push(validator.type);
+        }
       } else {
         formal.push(value);        
       }
     }
     item.formal = formal.join('');
+    item.type = types.length === 1
+      ? types[0]
+      : types.length > 1
+        ? types
+        : undefined;
   });
 };
 

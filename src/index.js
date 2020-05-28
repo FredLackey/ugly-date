@@ -23,15 +23,19 @@ const analyze = value => {
   validators.reformat(locations);
   
   const results = {
-    pattern : patterns.assemble(value, locations),
-    locations: locations.filter(x => (x && x.formal)).map(x => ({
+    value,
+    pattern   : patterns.assemble(value, locations),
+    hasDate   : locations.filter(x => (x && x.type === 'DATE')).length > 0,
+    hasDay    : locations.filter(x => (x && x.type === 'DAY')).length > 0,
+    hasTime   : locations.filter(x => (x && x.type === 'TIME')).length > 0,
+    locations : locations.filter(x => (x && x.formal)).map(x => ({
       formal  : x.formal,
       pattern : x.pattern,
       position: x.position,
+      type    : x.type,
       value   : x.value,
       values  : JSON.parse(JSON.stringify(x.values))
     })),
-    value,
     values: {}
   };
   results.locations.filter(x => (x && x.values)).forEach(location => {

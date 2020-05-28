@@ -24,7 +24,10 @@ const results  = uglyDate.analyze(value);
 Example results:
 ```
 {
-  "date": "2015-07-09T17:33:25.000Z",
+  "date": "2015-07-09T17:33:25.000Z"
+  "hasDate": true,
+  "hasDay": false,
+  "hasTime": true,
   "pattern": "Screen Shot YYYY-MM-DD at hh.mm.ss a",
   "value": "Screen Shot 2015-07-09 at 1.33.25 PM",
   "values": {
@@ -41,6 +44,7 @@ Example results:
       "formal": "YYYY-MM-DD",
       "pattern": "YYYY-MM-DD",
       "position": 12,
+      "type": "DATE",
       "value": "2015-07-09",
       "values": {
         "YYYY": 2015,
@@ -52,6 +56,7 @@ Example results:
       "formal": "hh.mm.ss a",
       "pattern": "h:mm:ss aa",
       "position": 26,
+      "type": "TIME",
       "value": "1.33.25 PM",
       "values": {
         "h": 1,
@@ -60,12 +65,15 @@ Example results:
         "aa": "PM"
       }
     }
-  ],
+  ]
 }
 ```
 In the example above, the following values are returned:
 
   * **date** : Date object, if a full date could be constructed.
+  * **hasDate** : Boolean indicating if a valid date value exists.
+  * **hasDay** : Boolean indicating if a valid day value exists.
+  * **hasTime** : Boolean indicating if a valid time value exists.
   * **pattern** : Example string including the detected pattern.
   * **value** : Original string (for verification puposes).
   * **values** : All detected keys (ie `result.values.YYYY`).
