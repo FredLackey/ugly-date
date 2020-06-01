@@ -30,6 +30,15 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/_tests/02 - short values.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "03 - reported values",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/_tests/03 - reported values.js"
     }
   ]
 }

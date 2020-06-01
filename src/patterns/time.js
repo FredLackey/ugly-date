@@ -34,6 +34,8 @@ module.exports = [
   'hh:mm:ssaa',
   
 
+  'h:mm',
+  'HH:mm',
   'HH:mm:ss',
   'HH:mm:ss.SSS',
   'HHmmss',
