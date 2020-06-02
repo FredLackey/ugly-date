@@ -3,6 +3,7 @@ const date  = require('./date');
 const day   = require('./day');
 const time  = require('./time');
 
+const TYPES = ['DAY', 'DATE', 'TIME'];
 const all = [].concat(date, day, time).filter(_.isValidString);
 
 const locate = value => {
@@ -68,9 +69,40 @@ const split = (locations) => {
   });
 };
 
+
+const removeOverlap = (items) => {
+  const validTypes = TYPES.filter(typeName => (
+    (typeName && items.filter(x => (x && x.type === typeName)).length === 1)
+  ));
+  const validPositions = [];
+  validTypes.forEach(validType => {
+    const validItem = items.find(x => (x && x.type === validType));
+    for (let i = 0; i < validItem.pattern.length; i += 1) {
+      validPositions.push((validItem.position + i));
+    }
+  });
+  const invalidItems = [];
+  items.filter(item => (item && item.type && !validTypes.includes(item.type)))
+    .forEach(item => {
+      
+      for (let i = 0; i < item.pattern.length; i += 1) {
+        const pos = item.position + i;
+        if (validPositions.includes(pos)) {
+          invalidItems.push(item);
+          break;
+        }
+      }
+      
+    });
+    
+  return items.filter(x => (x && x.type && !invalidItems.includes(x)));
+};
+
+
 const getSuperior = (item, items) => {
   const results = items.filter(x => (x && x.pattern && 
     x !== item && 
+    x.position === item.position &&
     x.pattern.length >= item.pattern.length && 
     // x.pattern.indexOf(item.pattern) === 0));
     x.pattern.toUpperCase().indexOf(item.pattern.toUpperCase()) === 0));
@@ -139,6 +171,7 @@ module.exports = {
   
   locate,
   split,
+  removeOverlap,
   pruneTrivial,
   assemble
 };

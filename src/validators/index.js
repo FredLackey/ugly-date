@@ -42,6 +42,11 @@ const validate = (value, locations) => {
         // (value, segment, token)
         if (validators[0].validator(value, segment, token)) {
           count += 1;
+          
+          location.type = location.type || validators[0].type;
+          if (location.type !== validators[0].type) {
+            throw new Error('Pattern mismatch scenario!');
+          }
         } else {
           location.isValid = false;
         }

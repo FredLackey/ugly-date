@@ -7,9 +7,6 @@ const analyze = value => {
   // Locate known patterns in the supplied value.
   let locations = patterns.locate(value);
   
-  // Remove any weaker patterns if more verbose patterns were found.
-  locations = patterns.pruneTrivial(locations);
-  
   // Break down multiple positions into unique location instances.
   patterns.split(locations);
   
@@ -18,6 +15,12 @@ const analyze = value => {
   
   // Fitler out invalid instances.
   locations = locations.filter(x => (x && x.isValid === true));
+  
+  // Remove any weaker patterns if more verbose patterns were found.
+  locations = patterns.pruneTrivial(locations);
+  
+  // Remove any items suggested in a position known to be valid
+  locations = patterns.removeOverlap(locations);
   
   // Locate the formal versions of each pattern.
   validators.reformat(locations);
