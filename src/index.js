@@ -1,3 +1,4 @@
+const filters     = require('./filters');
 const parser      = require('./parser');
 const patterns    = require('./patterns');
 const validators  = require('./validators');
@@ -18,6 +19,8 @@ const analyze = value => {
   
   // Remove any weaker patterns if more verbose patterns were found.
   locations = patterns.pruneTrivial(locations);
+  
+  locations = filters.valids.positionLength(locations);
   
   // Remove any items suggested in a position known to be valid
   locations = patterns.removeOverlap(locations);
